@@ -75,8 +75,8 @@ class Integral {
                         table[flag][1] += h*f(a+(2*j-1)*h);
                     }
                 } catch(err) {
-                    throw err;
                     console.log("Likely error occured due to faulty function. Consider checking domain.");
+                    throw err;
                 }
             }
             for(let j=2; j<=i; j++) {

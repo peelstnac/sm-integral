@@ -17,13 +17,14 @@ npm install sm-integral
 ## Usage
 Below, we demonstrate how to evaluate the following integrals:
 <p align="center">
-    <img src="https://latex.artofproblemsolving.com/4/7/e/47e81fa35f8c2401c79087841c9277b23a5f2755.png"/>
+    <img src="https://latex.artofproblemsolving.com/4/7/e/47e81fa35f8c2401c79087841c9277b23a5f2755.png" width="150"/>
 </p>
 and
 <p align="center">
-    <img src="https://latex.artofproblemsolving.com/5/4/d/54dc7c6321193d06abd2dc1016fbf74fddf7a8e5.png"/>
+    <img src="https://latex.artofproblemsolving.com/5/4/d/54dc7c6321193d06abd2dc1016fbf74fddf7a8e5.png" width="150"/>
 </p>
 respectively.
+
 ```js
 const Integral = require('sm-integral');
 

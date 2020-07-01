@@ -1,3 +1,5 @@
+"use strict";
+
 class Integral {
     //there are two possible types: romberg and carlo
     constructor(type) {
@@ -7,6 +9,8 @@ class Integral {
     //for romberg, error is O(h^(2n)) where h=(b-a)/2^n
     //bounds can be numbers as well as "-inf"/"inf"
     integrate(f, a, b, e) {
+        if(a=="-inf" || b=="inf") return rombergImproper();
+        else return rombergDefinite(f, a, b);
         //calculate x^y in O(log(y)) time
         function fastPower(x, y) {
             if(y == 0) return 1;
@@ -22,7 +26,7 @@ class Integral {
             }
             return sol;
         }
-        function rombergDefinite() {
+        function rombergDefinite(f, a, b) {
             //e must be even
             if(e%2 != 0) {
                 e++;
@@ -37,11 +41,9 @@ class Integral {
                 table[i] = new Array(e/2+1);
             }
             table[0][1] = 4;
-            console.log(f(4));
             for(let i=1; i<=e/2; i++) {
                 //switch state
                 flag = ~flag&1;
-                console.log(flag);
                 //Simpson's rule
                 table[flag][1] = (f(a)+f(b))*h/2;
                 if(i != 1) {
@@ -59,7 +61,38 @@ class Integral {
             return table[flag][e/2];
         }
         function rombergImproper() {
-
+            //g(x) = f(1/x)*(-1/x^2)
+            function g(x) {
+                return f(1/x)*(-1/(x*x));
+            }
+            var invert = false;
+            if(a != b && (a == "inf" || b == "-inf")) invert = true;
+            if(a == "-inf" && b == "inf") {
+                if(invert) {
+                    return -(rombergDefinite(f, -1, 1) + rombergDefinite(g, 0, -1) + rombergDefinite(g, 1, 0));
+                }
+                return rombergDefinite(f, -1, 1) + rombergDefinite(g, 0, -1) + rombergDefinite(g, 1, 0);
+            }
+            else {
+                if(a == "-inf") {
+                    let newBound = b-1;
+                    if(newBound == 0) newBound--;
+                    let approxZero = 1e-100;
+                    if(newBound < 0) approxZero = -approxZero;
+                    if(invert) {
+                        return -(rombergDefinite(f, newBound, b) + rombergDefinite(g, approxZero, 1/newBound));
+                    }
+                    return rombergDefinite(f, newBound, b) + rombergDefinite(g, approxZero, 1/newBound);
+                }
+                if(b == "inf") {
+                    let newBound = a+1;
+                    if(newBound == 0) newBound++;
+                    let approxZero = 1e-100;
+                    if(newBound < 0) approxZero = -approxZero;
+                    if(invert) return -(rombergDefinite(f, a, newBound) + rombergDefinite(g, 1/newBound, approxZero));
+                    return rombergDefinite(f, a, newBound) + rombergDefinite(g, 1/newBound, approxZero); 
+                }
+            }
         }
         function carloDefinite() {
             
@@ -69,3 +102,5 @@ class Integral {
         }
     }
 }
+
+module.exports = Integral;

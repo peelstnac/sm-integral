@@ -1,10 +1,10 @@
 {
   "name": "sm-integral",
   "version": "1.0.0",
-  "description": "Compute definite and improper integrals with Simpson's Rule/Monte Carlo Integration. Easily integrate JavaScript functions.",
+  "description": "Compute definite and improper integrals with Simpson's Rule. Easily integrate JavaScript functions.",
   "main": "src/sm-integral.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -13,19 +13,20 @@
   "keywords": [
     "Calculus",
     "Integral",
+    "Integrate",
     "Definite",
     "Improper",
     "Numerical",
-    "Methods",
-    "Definite",
-    "Integral",
-    "Improper",
-    "Integral"
+    "Romberg"
   ],
   "author": "peelstnac",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SleepyMathematics/sm-integral/issues"
   },
-  "homepage": "https://github.com/SleepyMathematics/sm-integral#readme"
+  "homepage": "https://github.com/SleepyMathematics/sm-integral#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.0.1"
+  }
 }

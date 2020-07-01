@@ -1,7 +1,7 @@
 {
   "name": "sm-integral",
-  "version": "1.0.0",
-  "description": "Compute definite and improper integrals with Simpson's Rule. Easily integrate JavaScript functions.",
+  "version": "1.0.1",
+  "description": "Compute definite and improper integrals using Romberg Integration. Easily integrate JavaScript functions.",
   "main": "src/sm-integral.js",
   "scripts": {
     "test": "mocha && semistandard",

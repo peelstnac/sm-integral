@@ -18,21 +18,29 @@ npm install sm-integral
 ```js
 const Integral = require('sm-integral');
 
-//definite integrals
-
+//definite function to integrate
 function f(x) {
     return 1/(x*x);
 }
 
+//definite integral
 console.log(Integral.integrate(f, 5, 10));
 
-function g(x) {
-    return Math.pow(Math.E, 1/(x*x));
-}
-
-console.log(Integral.integrate(g, 1, 4));
-
 //improper integral
-
 console.log(Integral.integrate(f, "-inf", -10));
 ```
+
+## Configuration
+The integrate() function has the following parameters.
+```js
+class Integrate {
+    //...
+    integrate(f, a, b, e=18) {
+        //...
+    }
+}
+```
+* ```f``` is the JavaScript function to be integrated.
+* ```a``` is the lower bound of the integral (can either be a number or "inf"/"-inf").
+* ```b``` is the upper bound of the integral (can either be a number or "inf"/"-inf").
+* ```e``` is the order of accuracy. Its default value is 18, which can evaluate most integrals up to at least +-1e-9 accuracy (see "Tests").

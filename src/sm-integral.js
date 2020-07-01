@@ -1,14 +1,24 @@
 "use strict";
-
-class Integral {
-    //there are two possible types: romberg and carlo
-    constructor(type) {
-        this.type = type;
-    }
+//this class WILL evalulate SOME integrals that do not converge
+//this is because functions like (x) => {return x/x} will not encounter divide by zero errors
+//if the integrate function returns NaN then it is certain that integral does not converge
+//or function is ill defined, but this does not happen for all non convergent integrals /
+//ill defined functions
+class Integral extends Error {
     //pass in function, lower bound, upper bound, order of error
     //for romberg, error is O(h^(2n)) where h=(b-a)/2^n
     //bounds can be numbers as well as "-inf"/"inf"
     integrate(f, a, b, e) {
+        //checking for TypeError
+        if(typeof a != "number" && a != "inf" && a != "-inf") {
+            throw new TypeError("<a> must be a number or \"inf\"/\"-inf\".");
+        }
+        if(typeof b != "number" && b != "inf" && b != "-inf") {
+            throw new TypeError("<b> must be a number or \"inf\"/\"-inf\".");
+        }
+        if(!Number.isInteger(e)) {
+            throw new TypeError("<e> must be an integer.");
+        }
         if(a=="-inf" || b=="inf") return rombergImproper();
         else return rombergDefinite(f, a, b);
         //calculate x^y in O(log(y)) time
@@ -27,6 +37,16 @@ class Integral {
             return sol;
         }
         function rombergDefinite(f, a, b) {
+            //check for edge case of 0
+            if(a == b) {
+                return 0;
+            }
+            if(a == 0) {
+                a = 10e-100 * (b / Math.abs(b));
+            }
+            if(b == 0) {
+                b = 10e-100 * (a / Math.abs(a));
+            }
             //e must be even
             if(e%2 != 0) {
                 e++;
@@ -49,8 +69,13 @@ class Integral {
                 if(i != 1) {
                     table[flag][1] = table[~flag&1][1]/2;
                     let upperBound = fastPower(2, i-2);
-                    for(let j=1; j<=upperBound; j++) {
-                        table[flag][1] += h*f(a+(2*j-1)*h);
+                    try{
+                        for(let j=1; j<=upperBound; j++) {
+                            table[flag][1] += h*f(a+(2*j-1)*h);
+                        }
+                    } catch(err) {
+                        throw err;
+                        console.log("Likely error occured due to faulty function. Consider checking domain.");
                     }
                 }
                 for(let j=2; j<=i; j++) {
@@ -77,8 +102,7 @@ class Integral {
                 if(a == "-inf") {
                     let newBound = b-1;
                     if(newBound == 0) newBound--;
-                    let approxZero = 1e-100;
-                    if(newBound < 0) approxZero = -approxZero;
+                    let approxZero = 1e-100 * (newBound/Math.abs(newBound));
                     if(invert) {
                         return -(rombergDefinite(f, newBound, b) + rombergDefinite(g, approxZero, 1/newBound));
                     }
@@ -87,18 +111,11 @@ class Integral {
                 if(b == "inf") {
                     let newBound = a+1;
                     if(newBound == 0) newBound++;
-                    let approxZero = 1e-100;
-                    if(newBound < 0) approxZero = -approxZero;
+                    let approxZero = 1e-100 * (newBound/Math.abs(newBound));
                     if(invert) return -(rombergDefinite(f, a, newBound) + rombergDefinite(g, 1/newBound, approxZero));
                     return rombergDefinite(f, a, newBound) + rombergDefinite(g, 1/newBound, approxZero); 
                 }
             }
-        }
-        function carloDefinite() {
-            
-        }
-        function carloImproper() {
-
         }
     }
 }

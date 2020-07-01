@@ -66,11 +66,11 @@ In the test folder, 8 integrals are tested with the default ```e=18``` parameter
 ### Order of Accuracy
 To have an order of accuracy ```e``` means that the ```returnedValue``` when computing
 <p align="center">
-    <img src="https://latex.artofproblemsolving.com/6/b/6/6b67859a166c3d448ebb0221e5491fbebda93e98.png" width="150"/>
+    <img src="https://latex.artofproblemsolving.com/6/b/6/6b67859a166c3d448ebb0221e5491fbebda93e98.png" width="100"/>
 </p>
 satisfies
 <p align="center">
-    <img src="https://latex.artofproblemsolving.com/5/0/2/502320d69fd37d1fda35584be759b655438c71e8.png" width="300"/>
+    <img src="https://latex.artofproblemsolving.com/5/0/2/502320d69fd37d1fda35584be759b655438c71e8.png" width="500"/>
 </p>
 . Note that for improper integrals, the substitution y=1/x is made.
 

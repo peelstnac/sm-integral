@@ -16,7 +16,7 @@ class Integral {
         if(!Number.isInteger(e)) {
             throw new TypeError("<e> must be an integer.");
         }
-        if(a=="-inf" || b=="inf") return this._rombergImproper();
+        if(a=="-inf" || b=="inf") return this._rombergImproper(f, a, b, e);
         else return this._rombergDefinite(f, a, b, e);
     }
     //calculate x^y in O(log(y)) time
@@ -110,8 +110,8 @@ class Integral {
                 let newBound = a+1;
                 if(newBound == 0) newBound++;
                 let approxZero = 1e-100 * (newBound/Math.abs(newBound));
-                if(invert) return -(rombergDefinite(f, a, newBound, e) + rombergDefinite(g, 1/newBound, approxZero, e));
-                return rombergDefinite(f, a, newBound, e) + rombergDefinite(g, 1/newBound, approxZero, e); 
+                if(invert) return -(this._rombergDefinite(f, a, newBound, e) + this._rombergDefinite(g, 1/newBound, approxZero, e));
+                return this._rombergDefinite(f, a, newBound, e) + this._rombergDefinite(g, 1/newBound, approxZero, e); 
             }
         }
     }

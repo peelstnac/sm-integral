@@ -26,7 +26,7 @@ describe("sm-integral", () => {
         function f(x) {
             return 0.7*x*x+0.56*x+17;
         }
-        assert.closeTo(Integral.integrate(f, 5, 13, 18), 659+59/75, 1e-12, "Evaluate quadratic function f(x)=0.7*x*x+0.56*x+17 with"
+        assert.closeTo(Integral.integrate(f, 5, 13, 18), 659+59/75, 1e-9, "Evaluate quadratic function f(x)=0.7*x*x+0.56*x+17 with"
         + " order of accuracy 18.");
     });
     it("Integrating the cubic function f(x)=56.1*x*x*x-2*x+1 with order of accuracy of 18.", () => {
@@ -40,7 +40,14 @@ describe("sm-integral", () => {
         function f(x) {
             return Math.pow(Math.E, 1/(x*x));
         }
-        assert.closeTo(Integral.integrate(f, 1, 4, 18), 3.954384577738, 1e-12, "Evaluate error function with"
+        assert.closeTo(Integral.integrate(f, 1, 4, 18), 3.954384577738, 1e-9, "Evaluate error function with"
         + " order of accuracy 18.");
+    });
+    it("Testing improper integral on f(x)=1/(x*x)", () => {
+        function f(x) {
+            return 1/(x*x);
+        }
+        assert.closeTo(Integral.integrate(f, "-inf", -10, 18), 0.1, 1e-9, "Evaluate improper integral of"
+        + " f(x)=1/(x*x) with order of accuracy 18.");
     });
 });

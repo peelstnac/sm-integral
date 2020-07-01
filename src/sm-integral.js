@@ -1,14 +1,11 @@
 "use strict";
-//this class WILL evalulate SOME integrals that do not converge
-//this is because functions like (x) => {return x/x} will not encounter divide by zero errors
-//if the integrate function returns NaN then it is certain that integral does not converge
-//or function is ill defined, but this does not happen for all non convergent integrals /
-//ill defined functions
 class Integral {
     //pass in function, lower bound, upper bound, order of error
-    //for romberg, error is O(h^(2n)) where h=(b-a)/2^n
-    //bounds can be numbers as well as "-inf"/"inf"
-    integrate(f, a, b, e) {
+    //for romberg, order of accuracy n has error is O(h^(2n)) where h=(b-a)/2^n
+    //bounds can be numbers and/or "-inf"/"inf"
+    
+    //default order of accuracy is 18
+    integrate(f, a, b, e=18) {
         //checking for TypeError
         if(typeof a != "number" && a != "inf" && a != "-inf") {
             throw new TypeError("<a> must be a number or \"inf\"/\"-inf\".");

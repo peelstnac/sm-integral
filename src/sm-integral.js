@@ -43,10 +43,10 @@ class Integral {
             return 0;
         }
         if(a == 0) {
-            a = 10e-100 * (b / Math.abs(b));
+            a = 1e-100 * (b / Math.abs(b));
         }
         if(b == 0) {
-            b = 10e-100 * (a / Math.abs(a));
+            b = 1e-100 * (a / Math.abs(a));
         }
         //e must be even
         if(e%2 != 0) {
